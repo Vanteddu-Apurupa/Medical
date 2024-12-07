@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Logo from './logo.jpg'; // Assuming the logo path is the same
+import Logo from './logo.jpg';
 
 const Pdoc = () => {
   const [doctors, setDoctors] = useState([]);
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("");
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const username = localStorage.getItem("un");
 
   useEffect(() => {
@@ -19,25 +22,38 @@ const Pdoc = () => {
 
     fetchDoctors();
   }, []);
-
-  const deleteDoctor = (email) => {
-    axios.delete("http://localhost:8080/deleteDoctor", {
-      params: {
-        email: email,
-      },
-    })
-    .then((response) => {
-      alert(response.data);
-      setDoctors(doctors.filter((doctor) => doctor.email !== email)); // Remove deleted doctor from list
-    })
-    .catch((error) => {
-      console.error("Error deleting doctor:", error);
+  const submitAppointment = async () => {
+    try {  console.log("Appointment Data:", {
+      username: username,
+      doctorEmail: selectedDoctor,
+      date: appointmentDate,
+      time: appointmentTime,
     });
+     
+      const response = await axios.post("http://localhost:8080/appointments", {
+        date: appointmentDate,
+        doctorEmail: selectedDoctor,
+        patientEmail: username,
+        time: appointmentTime,
+      });
+      alert(response.data);
+  
+      // Print the appointment data to the console
+    
+  
+      // Clear fields after successful submission
+      setAppointmentDate("");
+      setAppointmentTime("");
+      setSelectedDoctor(null);
+    } catch (error) {
+      console.error("Error booking appointment:", error);
+    }
   };
+  
 
   return (
     <div className="body">
-      {/* Admin Page Navbar */}
+      {/* Navbar */}
       <div
         className="navbar"
         style={{
@@ -68,6 +84,8 @@ const Pdoc = () => {
           </Link>
         </div>
       </div>
+
+      {/* Welcome Message */}
       <div
         style={{
           textAlign: 'right',
@@ -116,7 +134,7 @@ const Pdoc = () => {
             <p><strong>Email:</strong> {doctor.email}</p>
             <p><strong>Phone Number:</strong> {doctor.phoneNumber}</p>
             <button
-              onClick={() => deleteDoctor(doctor.email)}
+              onClick={() => setSelectedDoctor(doctor.email)}
               style={{
                 backgroundColor: 'skyblue',
                 color: 'white',
@@ -131,6 +149,59 @@ const Pdoc = () => {
           </div>
         ))}
       </div>
+
+      {/* Appointment Form */}
+      {selectedDoctor && (
+        <div
+          style={{
+            margin: '20px auto',
+            padding: '20px',
+            maxWidth: '50%',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#f9f9f9',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+          }}
+        >
+          <h3 style={{ color: 'darkblue', textAlign: 'center' }}>
+            Book Appointment with {selectedDoctor}
+          </h3>
+          <label style={{ display: 'block', margin: '10px 0' }}>
+            Date:
+            <input
+              type="date"
+              value={appointmentDate}
+              onChange={(e) => setAppointmentDate(e.target.value)}
+              style={{ marginLeft: '10px', padding: '5px', width: '100%' }}
+            />
+          </label>
+          <label style={{ display: 'block', margin: '10px 0' }}>
+            Time:
+            <input
+              type="time"
+              value={appointmentTime}
+              onChange={(e) => setAppointmentTime(e.target.value)}
+              style={{ marginLeft: '10px', padding: '5px', width: '100%' }}
+            />
+          </label>
+          <button
+            onClick={submitAppointment}
+            style={{
+              backgroundColor: 'skyblue',
+              color: 'white',
+              border: 'none',
+              padding: '10px 20px',
+              cursor: 'pointer',
+              borderRadius: '5px',
+              display: 'block',
+              width: '100%',
+              marginTop: '10px',
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      )}
 
       {/* Footer */}
       <footer

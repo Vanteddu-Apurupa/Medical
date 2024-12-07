@@ -11,6 +11,9 @@ import Dlog from './components/dlog';
 import Dview from './components/viewdoc';
 import ViewU from './components/viewuser.js';
 import Pdoc from './components/Pdoc.js';
+import AppointmentD from './components/AppointmentD.js';
+import DHome from './components/DHome.js';
+import AppointmentDtoP from './components/AppointmentsDtoP.js';
 
 
 
@@ -45,21 +48,12 @@ function App() {
           <Route path="/dlog" element={<Dlog />}/>  
           <Route path="/doctors" element={<Dview />}/>  
           <Route path="/patients" element={<ViewU />}/>  
-          <Route path="/pdoc" element={<Pdoc />}/>  
+          <Route path="/pdoc" element={<Pdoc />}/> 
+          <Route path="/appointmentsD" element={<AppointmentD />}/> 
+          <Route path="/drhome" element={<DHome />}/> 
+          <Route path="/appointmentsDtoP" element={<AppointmentDtoP />}/> 
 
 
-
-
-
-        
-  
-
-
-  
-
-
-            
-               
         </Routes>
         </HashRouter>
       </div>

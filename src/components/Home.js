@@ -23,12 +23,16 @@ const Home = () => {
         
         {/* Menu Links */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Link to="/reg" className="nav-link">
+            <h3> Sign up</h3>
+          </Link>
           <Link to="/log" className="nav-link">
             <h3>Login</h3>
           </Link>
           <Link to="/dlog" className="nav-link">
             <h3> Doctor Login</h3>
           </Link>
+         
         </div>
       </div>
 

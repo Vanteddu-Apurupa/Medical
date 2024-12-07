@@ -14,7 +14,7 @@ const Signup = () => {
       });
 
       console.log(response.data);
-      if (response.data === "received data") {
+      if (response.data === "done") {
         alert("Successfully Registered! Please Login.");
       } else {
         alert("Failed to register");

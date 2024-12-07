@@ -1,11 +1,11 @@
 import React from 'react';
 import './home.css';
 import { Link } from 'react-router-dom';
-import Logo from './logo.jpg'; // Make sure to import your logo
+import Logo from './logo.jpg'; // Ensure your logo path is correct
 
-const Home1 = () => {
-  // Fetch the username from localStorage
-  const username = localStorage.getItem("un");
+const DHome = () => {
+  // Fetch the doctor's username from localStorage
+  const doctorName = localStorage.getItem("un");
 
   return (
     <div className="body">
@@ -29,7 +29,7 @@ const Home1 = () => {
         </div>
       </div>
 
-      {/* Welcome Patient Message */}
+      {/* Welcome Doctor Message */}
       <div style={{
         textAlign: 'right',
         marginRight: '20px',
@@ -39,12 +39,12 @@ const Home1 = () => {
         padding: '10px 20px',
         borderRadius: '10px'
       }}>
-        <h2>Welcome, {username}!</h2>
+        <h2>Welcome, Dr. {doctorName}!</h2>
       </div>
 
-      {/* Cards for "View All Doctors" and "Appointment Details" */}
+      {/* Cards for "Appointment Details" and "Patient List" */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
-        {/* View All Doctors Card */}
+        {/* Appointment Details Card */}
         <div style={{ 
           width: '20vw', 
           height: '20vh', 
@@ -67,12 +67,12 @@ const Home1 = () => {
           e.currentTarget.style.transform = 'scale(1)';
         }}
         >
-          <Link to="/pdoc" style={{ textDecoration: 'none', color: 'white', fontSize: '1.5vw', transition: 'color 0.3s' }}>
-            View All Doctors
+          <Link to="/appointmentsDtop" style={{ textDecoration: 'none', color: 'white', fontSize: '1.5vw', transition: 'color 0.3s' }}>
+            Appointment Details
           </Link>
         </div>
 
-        {/* Appointment Details Card */}
+        {/* Patient List Card */}
         <div style={{ 
           width: '20vw', 
           height: '20vh', 
@@ -94,8 +94,8 @@ const Home1 = () => {
           e.currentTarget.style.transform = 'scale(1)';
         }}
         >
-          <Link to="/appointmentsD" style={{ textDecoration: 'none', color: 'white', fontSize: '1.5vw', transition: 'color 0.3s' }}>
-            Appointment Details
+          <Link to="/patientList" style={{ textDecoration: 'none', color: 'white', fontSize: '1.5vw', transition: 'color 0.3s' }}>
+            Patient List
           </Link>
         </div>
       </div>
@@ -113,4 +113,4 @@ const Home1 = () => {
   );
 };
 
-export default Home1;
+export default DHome;
