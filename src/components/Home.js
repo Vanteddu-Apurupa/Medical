@@ -1,82 +1,200 @@
-import React from 'react';
-import './home.css';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from './logo.jpg'; // Make sure to import your logo
-import DoctorImage from './dr.jpg'; // Make sure to import your doctor image
-import DoctorImage1 from './dr1.jpg'; // Make sure to import your doctor image
-
+import Logo from './logo.jpg'; // Replace with your logo file
+import DemoVideo from './doctor.mp4'; // Replace with your video file
 
 const Home = () => {
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
   return (
-    <div className="body">
+    <div style={{ fontFamily: 'Arial, sans-serif', position: 'relative', height: '100vh', overflow: 'hidden' }}>
+      {/* Full-Screen Background Video */}
+      <video
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: -1, // Place the video behind all other elements
+        }}
+        src={DemoVideo}
+        type="video/mp4"
+        autoPlay
+        muted
+        loop
+      />
+
       {/* Navbar */}
-      <div className="navbar" style={{ backgroundColor: 'skyblue', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 20px',}}>
-        
-        {/* Logo and Name */}
+      <div
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: 'blur(5px)',
+          position: 'fixed',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '60%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '10px 20px',
+          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+          zIndex: 1000,
+          marginTop: '20px',
+          borderRadius: '50px',
+
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img style={{ width: '50px', height: '50px', cursor: 'pointer' }} src={Logo} alt='Logo' />
-          <h1 style={{ marginLeft: '10px', fontSize: '2vw' }}>
-            <span style={{ color: 'white' }}>MEDI</span>
-            <span style={{ color: 'darkblue' }}>SYNC</span>
+          <img
+            src={Logo}
+            alt="Logo"
+            style={{ width: '30px', height: '30px', cursor: 'pointer' }}
+          />
+          <h1
+            style={{
+              marginLeft: '10px',
+              fontSize: '1.2rem',
+              color: 'darkblue',
+              fontFamily: 'Roboto',
+            }}
+          >
+            MediSync
           </h1>
         </div>
-        
-        {/* Menu Links */}
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Link to="/reg" className="nav-link">
-            <h3> Sign up</h3>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <Link to="/" style={{ color: 'darkblue', textDecoration: 'none', fontSize: '1rem' }}>
+            Home
           </Link>
-          <Link to="/log" className="nav-link">
-            <h3>Login</h3>
+          <Link
+            to="/services"
+            style={{ color: 'darkblue', textDecoration: 'none', fontSize: '1rem' }}
+          >
+            
           </Link>
-          <Link to="/dlog" className="nav-link">
-            <h3> Doctor Login</h3>
+          <Link
+            to="/contact"
+            style={{ color: 'darkblue', textDecoration: 'none', fontSize: '1rem' }}
+          >
+           
           </Link>
-         
+          <div
+            style={{ position: 'relative', cursor: 'pointer' }}
+            onMouseEnter={() => setDropdownVisible(true)}
+           
+          >
+            <span
+              style={{
+                fontSize: '1rem',
+                color: 'darkblue',
+                fontWeight: 'bold',
+              }}
+            >
+              Login
+            </span>
+            {isDropdownVisible && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '30px',
+                  right: 0,
+                  backgroundColor: 'white',
+                  boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
+                  borderRadius: '5px',
+                  minWidth: '120px',
+                  zIndex: 1,
+                }}
+              >
+                <Link
+                  to="/log"
+                  style={{
+                    display: 'block',
+                    padding: '10px',
+                    textDecoration: 'none',
+                    color: 'darkblue',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  Admin Login
+                </Link>
+                <Link
+                  to="/dlog"
+                  style={{
+                    display: 'block',
+                    padding: '10px',
+                    textDecoration: 'none',
+                    color: 'darkblue',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  Doctor Login
+                </Link>
+                <Link
+                  to="/log"
+                  style={{
+                    display: 'block',
+                    padding: '10px',
+                    textDecoration: 'none',
+                    color: 'darkblue',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  Patient Login
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link
+            to="/reg"
+            style={{
+              backgroundColor: 'green',
+              color: 'white',
+              padding: '5px 10px',
+              textDecoration: 'none',
+              borderRadius: '5px',
+              fontSize: '1rem',
+            }}
+          >
+            SignUp
+          </Link>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="content" style={{ display: 'flex', padding: '20px', justifyContent: 'space-between' }}>
-        {/* Left Box - Doctor Image */}
-        <div className="left-box" style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <img src={DoctorImage} alt="Doctor" style={{ width: '90%', height: 'auto', borderRadius: '10px' }} />
-        </div>
-
-        {/* Right Box - Medical Consultancy Services */}
-        <div className="right-box" style={{ flex: '1', padding: '20px', color: 'darkblue', textAlign: 'center' }}>
-          <h2>Medical Consultancy Services</h2>
-          <p style={{ fontSize: '1.5vw', marginTop: '20px' }}>
-            Connecting You to Exceptional</p>
-           
-           <p style={{paddingLeft:"10vw"}}> Healthcare Anytime, Anywhere.
-          </p>
-          {/* Get Care Button */}
-          <button style={{
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'white',
+          textAlign: 'center',
+          zIndex: 1, // Ensure text overlays the video
+        }}
+      >
+        <h2>Your Health, Our Priority</h2>
+        <p style={{ marginTop: '10px', fontSize: '1.2rem' }}>Seamless healthcare solutions at your fingertips.</p>
+        <Link
+          to="/join"
+          style={{
             backgroundColor: 'darkblue',
-            width:'10vw',
             color: 'white',
-            border: 'none',
             padding: '10px 20px',
-            fontSize: '1.2vw',
+            textDecoration: 'none',
             borderRadius: '5px',
-            cursor: 'pointer',
-            marginTop: '20px'
-          }}>
-            Get Care In
-          </button>
-        </div>
+            fontSize: '1.1rem',
+            display: 'inline-block',
+            marginTop: '20px',
+          }}
+        >
+          Join Now
+        </Link>
       </div>
-
-      {/* Footer */}
-      <footer style={{ backgroundColor: 'skyblue', color: 'white', padding: '20px', marginTop: '20vh', textAlign: 'center' }}>
-        <p style={{ fontSize: '1.2vw' }}>© 2024 MediSync. All rights reserved.</p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '10px' }}>
-          <Link to="/terms" style={{ color: 'white', textDecoration: 'none' }}>Terms & Conditions</Link>
-          <Link to="/privacy" style={{ color: 'white', textDecoration: 'none' }}>Privacy Policy</Link>
-          <Link to="/contact" style={{ color: 'white', textDecoration: 'none' }}>Contact Us</Link>
-        </div>
-      </footer>
     </div>
   );
 };

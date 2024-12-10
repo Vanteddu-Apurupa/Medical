@@ -30,8 +30,14 @@ const AppointmentDtoP = () => {
   }, [doctorSelected, doctorEmail]);
 
   const handleDoctorEmailSubmit = () => {
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
     if (!doctorEmail) {
       alert("Please enter a doctor's email");
+      return;
+    }
+    if (!gmailRegex.test(doctorEmail)) {
+      alert("Please enter a valid Gmail address (e.g., example@gmail.com)");
       return;
     }
     setDoctorSelected(true);
@@ -45,7 +51,7 @@ const AppointmentDtoP = () => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("file", file); // Correct name for 'file' part
+      formData.append("file", file);
       formData.append("patientEmail", appointment.patientEmail);
       formData.append("doctorEmail", appointment.doctorEmail);
 
